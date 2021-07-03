@@ -3,7 +3,18 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // apiUrl: `https://spring-flight-manager.herokuapp.com`,
+  apiUrl: `http://localhost:8080`,
+  reasons: [
+    'Meeting',
+    'Training',
+    'Project',
+    'Workshop',
+    'Event',
+    'Other'
+  ],
+  statuses: ['CREATED', 'PENDING', 'APPROVED']
 };
 
 /*

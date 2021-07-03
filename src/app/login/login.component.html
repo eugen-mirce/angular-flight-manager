@@ -1,0 +1,25 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="25" class="card card-container">
+        <mat-toolbar color="primary">Login Page</mat-toolbar>
+        <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" />
+        <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" (ngSubmit)="loginProces()">
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Enter email here" type="text" name="email" [(ngModel)]="form.email"
+                    required #email="ngModel">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password"
+                    [(ngModel)]="form.password" required minlength="6" #password="ngModel">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-raised-button type="submit">Login</button>
+            <p class="alert alert-success" *ngIf="isLoggedIn">{{message}}</p>
+            <p class="alert alert-danger" *ngIf="isLoginFailed">{{message}}</p>
+        </form>
+    </mat-card>
+</div>

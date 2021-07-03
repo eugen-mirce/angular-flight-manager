@@ -1,0 +1,30 @@
+<div>
+    <div class="add-form">
+        <h4>User Register</h4>
+        <form>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" [(ngModel)]="newUser.firstName"
+                    name="firstName" />
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" [(ngModel)]="newUser.lastName" name="lastName" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" [(ngModel)]="newUser.email" name="email" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" [(ngModel)]="newUser.password"
+                    name="password" />
+            </div>
+        </form>
+
+        <button type="submit" class="badge badge-success mb-2" (click)="addUser()">
+            Create
+        </button>
+        <p>{{ message }}</p>
+    </div>
+</div>

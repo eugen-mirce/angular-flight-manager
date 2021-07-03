@@ -1,0 +1,100 @@
+<div *ngIf="dialog.type == 'trip'">
+    <button class="close" mat-button [mat-dialog-close]="true">X</button>
+    <h2 mat-dialog-title>Edit Trip</h2>
+    <div class="add-form">
+        <mat-dialog-content>
+            <div class="form-group">
+                <label for="reason">Reason</label>
+                <select name="reason" id="reason" [(ngModel)]="formData.reason" class="form-control">
+                    <option *ngFor="let reason of reasons" [value]="reason">{{reason}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" [(ngModel)]="formData.description"
+                    name="description" />
+            </div>
+            <div class="form-group">
+                <label for="from">From Destination</label>
+                <input type="text" class="form-control" id="from" [(ngModel)]="formData.from" name="from" />
+            </div>
+            <div class="form-group">
+                <label for="to">To Destination</label>
+                <input type="text" class="form-control" id="to" [(ngModel)]="formData.to" name="to" />
+            </div>
+            <div class="form-group">
+                <label for="departureDate">Departure Date</label>
+                <input type="date" class="form-control" id="departureDate" [(ngModel)]="formData.departureDate"
+                    name="departureDate" />
+            </div>
+            <div class="form-group">
+                <label for="arrivalDate">Arrival Date</label>
+                <input type="date" class="form-control" id="arrivalDate" [(ngModel)]="formData.arrivalDate"
+                    name="arrivalDate" />
+            </div>
+        </mat-dialog-content>
+
+        <button type="submit" class="badge badge-success mb-2" (click)="updateTrip()">
+            Update
+        </button>
+        <p>{{ message }}</p>
+    </div>
+</div>
+<div *ngIf="dialog.type == 'flight'">
+    <button class="close" mat-button [mat-dialog-close]="true">X</button>
+    <h2 mat-dialog-title>Edit Flight</h2>
+    <div class="add-form">
+        <mat-dialog-content>
+            <div class="form-group">
+                <label for="from">From Destination</label>
+                <input type="text" class="form-control" id="from" [(ngModel)]="formData.from" name="from" />
+            </div>
+            <div class="form-group">
+                <label for="to">To Destination</label>
+                <input type="text" class="form-control" id="to" [(ngModel)]="formData.to" name="to" />
+            </div>
+            <div class="form-group">
+                <label for="departureDate">Departure Date</label>
+                <input type="date" class="form-control" id="departureDate" [(ngModel)]="formData.departureDate"
+                    name="departureDate" />
+            </div>
+            <div class="form-group">
+                <label for="arrivalDate">Arrival Date</label>
+                <input type="date" class="form-control" id="arrivalDate" [(ngModel)]="formData.arrivalDate"
+                    name="arrivalDate" />
+            </div>
+        </mat-dialog-content>
+
+        <button type="submit" class="badge badge-success mb-2" (click)="updateFlight()">
+            Update
+        </button>
+        <p>{{ message }}</p>
+    </div>
+</div>
+<div *ngIf="dialog.type == 'user'">
+    <button class="close" mat-button [mat-dialog-close]="true">X</button>
+    <h2 mat-dialog-title>Edit Flight</h2>
+    <div class="add-form">
+        <mat-dialog-content>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" [(ngModel)]="formData.email" name="email"
+                    disabled />
+            </div>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" [(ngModel)]="formData.firstName"
+                    name="firstName" />
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" [(ngModel)]="formData.lastName" name="lastName" />
+            </div>
+        </mat-dialog-content>
+
+        <button type="submit" class="badge badge-success mb-2" (click)="updateUser()">
+            Update
+        </button>
+        <p>{{ message }}</p>
+    </div>
+</div>
