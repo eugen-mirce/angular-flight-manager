@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
 
   resultsLength = 0;
   currentPage = 0;
-  itemsPerPage = 2;
+  itemsPerPage = 3;
 
   displayedColumns: string[] = ['id', 'email', 'firstName', 'lastName', 'options'];
   dataSource: any[] = [];

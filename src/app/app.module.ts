@@ -24,8 +24,6 @@ import { LoginComponent } from './login/login.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { UsersComponent } from './users/users.component';
-import { HomeComponent } from './home/home.component';
-import { AdminComponent } from './admin/admin.component';
 import { FlightsComponent } from './flights/flights.component';
 import { RegisterComponent } from './register/register.component';
 import { TripsComponent } from './trips/trips.component';
@@ -40,8 +38,6 @@ import { AddDialog } from './_dialogs/add-dialog.component';
     AppComponent,
     LoginComponent,
     UsersComponent,
-    HomeComponent,
-    AdminComponent,
     FlightsComponent,
     RegisterComponent,
     TripsComponent,

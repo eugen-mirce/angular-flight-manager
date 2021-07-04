@@ -9,6 +9,7 @@ import { AddDialog } from '../_dialogs/add-dialog.component';
 import { EditDialog } from '../_dialogs/edit-dialog.component';
 import { FlightService } from '../_services/flight.service';
 import { Flight } from '../_models/flight';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-flights',
@@ -20,7 +21,10 @@ export class FlightsComponent implements OnInit, AfterViewInit {
   tripId: number;
   isLoadingResults = true;
 
+  pageEvent: PageEvent;
   resultsLength = 0;
+  currentPage = 0;
+  itemsPerPage = 3;
 
   displayedColumns: string[] = ['id', 'from', 'to', 'departureDate', 'arrivalDate', 'options'];
   dataSource: Flight[] = [];
@@ -45,16 +49,24 @@ export class FlightsComponent implements OnInit, AfterViewInit {
       if (user.roles.includes('ADMIN'))
         this.isAdmin = true;
       this.getFlights();
-    } else this.router.navigate(['/login']);
+
+    } else
+      this.router.navigate(['/login']);
+  }
+
+  public getPaginatorData(event: PageEvent): PageEvent {
+    this.currentPage = event.pageIndex;
+    this.getFlights();
+    return event;
   }
 
   getFlights(): void {
     this.isLoadingResults = true;
     if (this.isAdmin && this.tripId) {
-      this.adminService.getTripFlights(this.tripId).subscribe(
+      this.adminService.getTripFlights(this.tripId, this.currentPage + 1, this.itemsPerPage).subscribe(
         data => {
           this.dataSource = data.content;
-          this.resultsLength = data.length;
+          this.resultsLength = data.totalElements;
           this.isLoadingResults = false;
         },
         error => {
@@ -64,10 +76,10 @@ export class FlightsComponent implements OnInit, AfterViewInit {
       );
     } else if (!this.isAdmin && this.tripId) {
       let user = this.tokenStorageService.getUser();
-      this.flightService.getAll(user.id, this.tripId).subscribe(
+      this.flightService.getAll(user.id, this.tripId, this.currentPage + 1, this.itemsPerPage).subscribe(
         data => {
-          this.dataSource = data;
-          this.resultsLength = data.length;
+          this.dataSource = data.content;
+          this.resultsLength = data.totalElements;
           this.isLoadingResults = false;
         },
         error => {
@@ -76,7 +88,15 @@ export class FlightsComponent implements OnInit, AfterViewInit {
         }
       );
     } else {
-      this.router.navigate(['/trips']);
+      this.adminService.getAllFlights(this.currentPage + 1, this.itemsPerPage).subscribe(
+        data => {
+          this.dataSource = data.content;
+          this.resultsLength = data.totalElements;
+          this.isLoadingResults = false;
+        }, err => {
+          console.log(err);
+        }
+      )
     }
   }
   removeFlight(flight: any): void {

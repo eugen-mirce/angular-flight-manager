@@ -11,9 +11,9 @@ export class FlightService {
     private apiUrl = environment.apiUrl;
     constructor(private http: HttpClient) { }
 
-    getAll(userId: number, tripId: number): Observable<Flight[]> {
-        return this.http.get<Flight[]>(
-            `${this.apiUrl}/users/${userId}/trips/${tripId}/flights/`
+    getAll(userId: number, tripId: number, page: number, limit: number): Observable<any> {
+        return this.http.get(
+            `${this.apiUrl}/users/${userId}/trips/${tripId}/flights?page=${page}&limit=${limit}`
         );
     }
 

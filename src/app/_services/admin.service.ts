@@ -28,6 +28,7 @@ export class AdminService {
         return this.http.post(`${this.apiUrl}/users`, data);
     }
     updateUser(id: number, data: any): Observable<any> {
+        data.roles = [data.roles];
         return this.http.put(`${this.apiUrl}/users/${id}`, data);
     }
     deleteUser(id: number): Observable<any> {
@@ -40,8 +41,8 @@ export class AdminService {
     getTrip(tripId: number): Observable<Trip> {
         return this.http.get<Trip>(`${this.apiUrl}/trips/${tripId}`);
     }
-    getTripFlights(tripId: number): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/trips/${tripId}/flights`);
+    getTripFlights(tripId: number, page: number, limit: number): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/trips/${tripId}/flights?page=${page}&limit=${limit}`);
     }
     approveTrip(tripId: number): Observable<any> {
         return this.http.put(`${this.apiUrl}/trips/${tripId}/status/approved`, {});
@@ -52,8 +53,8 @@ export class AdminService {
     deleteTrip(tripId: number): Observable<any> {
         return this.http.delete(`${this.apiUrl}/trips/${tripId}`, { responseType: 'text' });
     }
-    getAllFlights(): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/flights`);
+    getAllFlights(page: number, limit: number): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/flights?page=${page}&limit=${limit}`);
     }
     getFlight(flightId: number): Observable<Flight> {
         return this.http.get<Flight>(`${this.apiUrl}/flights/${flightId}`);

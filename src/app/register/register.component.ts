@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
           ? response.message
           : 'This user was updated successfully!';
 
-        this.router.navigate(['/users']);
+        this.router.navigate(['/user/' + response.id]);
       },
       error => {
         console.log(error);

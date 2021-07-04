@@ -13,8 +13,8 @@ export class TripService {
 
     constructor(private http: HttpClient) { }
 
-    getAll(userId: number): Observable<Trip[]> {
-        return this.http.get<Trip[]>(`${this.apiUrl}/users/${userId}/trips`);
+    getAll(userId: number, page: number, limit: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/users/${userId}/trips?page=${page}&limit=${limit}`);
     }
     get(userId: number, tripId: number): Observable<Trip> {
         return this.http.get<Trip>(`${this.apiUrl}/users/${userId}/trips/${tripId}`);
@@ -27,9 +27,6 @@ export class TripService {
     }
     delete(userId: number, tripId: number): Observable<any> {
         return this.http.delete(`${this.apiUrl}/users/${userId}/trips/${tripId}`, { responseType: 'text' });
-    }
-    getFlights(userId: number, tripId: number): Observable<Flight[]> {
-        return this.http.get<Flight[]>(`${this.apiUrl}/users/${userId}/trips/${tripId}/flights`);
     }
     requestApproval(userId: number, tripId: number): Observable<any> {
         return this.http.post(`${this.apiUrl}/users/${userId}/trips/${tripId}/request_approval`, {});

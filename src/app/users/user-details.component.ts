@@ -11,6 +11,7 @@ import { UserService } from '../_services/user.service';
 })
 export class UserDetailsComponent implements OnInit {
   user: any;
+  paramId: number;
   isAdmin: boolean = false;
 
   message: string = '';
@@ -26,9 +27,9 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.tokenService.getUser();
     if (this.user.roles.includes('ADMIN')) this.isAdmin = true;
-    let userId = this.route.snapshot.params.id;
-    if (this.isAdmin && userId != undefined) {
-      this.adminService.getUser(userId).subscribe(
+    this.paramId = this.route.snapshot.params.id;
+    if (this.isAdmin && this.paramId != undefined) {
+      this.adminService.getUser(this.paramId).subscribe(
         response => {
           this.user = response;
         },
@@ -43,22 +44,35 @@ export class UserDetailsComponent implements OnInit {
   }
   updateUser(): void {
     if (this.isAdmin) {
-      this.adminService.updateUser(this.user.id, this.user).subscribe(
-        response => {
-          console.log(response);
-          this.message = response.message
-            ? response.message
-            : 'Information was updated successfully!';
-        },
-        error => {
-          console.log(error);
-          this.message = error.error.message;
-        }
-      );
+      if (this.paramId !== undefined && this.paramId !== null)
+        this.adminService.updateUser(this.paramId, this.user).subscribe(
+          response => {
+            this.message = response.message
+              ? response.message
+              : 'Information was updated successfully!';
+          },
+          error => {
+            console.log(error);
+            this.message = error.error.message;
+          }
+        );
+      else
+        this.adminService.updateUser(this.user.id, this.user).subscribe(
+          response => {
+            response.roles = 'ADMIN';
+            this.tokenService.saveUser(response);
+            this.message = response.message
+              ? response.message
+              : 'Information was updated successfully!';
+          },
+          error => {
+            console.log(error);
+            this.message = error.error.message;
+          }
+        );
     } else {
       this.userService.update(this.user.id, this.user).subscribe(
         response => {
-          console.log(response);
           this.tokenService.saveUser(response);
           this.message = response.message
             ? response.message
@@ -75,7 +89,7 @@ export class UserDetailsComponent implements OnInit {
     if (this.isAdmin) {
       this.adminService.deleteUser(this.user.id).subscribe(
         response => {
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/users']);
         },
         error => {
           console.log(error);

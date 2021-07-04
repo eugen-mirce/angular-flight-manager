@@ -27,7 +27,7 @@ export class TripsComponent implements OnInit, AfterViewInit {
 
   resultsLength = 0;
   currentPage = 0;
-  itemsPerPage = 5;
+  itemsPerPage = 3;
 
   displayedColumns: string[] = ['id', 'reason', 'description', 'from', 'to', 'departureDate', 'arrivalDate', 'status', 'options'];
   dataSource: Trip[] = [];
@@ -57,7 +57,6 @@ export class TripsComponent implements OnInit, AfterViewInit {
   }
 
   public getPaginatorData(event: PageEvent): PageEvent {
-    console.log(event.pageIndex);
     this.currentPage = event.pageIndex;
     this.getTrips();
     return event;
@@ -74,10 +73,10 @@ export class TripsComponent implements OnInit, AfterViewInit {
     this.isLoadingResults = true;
     if (this.isAdmin) {
       if (this.userId) {
-        this.tripService.getAll(this.userId).subscribe(
+        this.tripService.getAll(this.userId, this.currentPage + 1, this.itemsPerPage).subscribe(
           data => {
-            this.dataSource = data;
-            this.resultsLength = data.length;
+            this.dataSource = data.content,
+              this.resultsLength = data.totalElements;
             this.isLoadingResults = false;
           },
           error => {
@@ -99,10 +98,10 @@ export class TripsComponent implements OnInit, AfterViewInit {
       }
     } else {
       let user = this.tokenStorageService.getUser();
-      this.tripService.getAll(user.id).subscribe(
+      this.tripService.getAll(user.id, this.currentPage + 1, this.itemsPerPage).subscribe(
         data => {
-          this.dataSource = data;
-          this.resultsLength = data.length;
+          this.dataSource = data.content;
+          this.resultsLength = data.totalElements;
           this.isLoadingResults = false;
         },
         error => {
