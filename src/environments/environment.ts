@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiUrl: `https://spring-flight-manager.herokuapp.com`,
-  apiUrl: `http://localhost:8080`,
+  apiUrl: `https://spring-flight-manager.herokuapp.com`,
+//   apiUrl: `http://localhost:8080`,
   reasons: [
     'Meeting',
     'Training',
